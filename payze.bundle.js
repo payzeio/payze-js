@@ -46,7 +46,7 @@ function Payze(trId) {
     'border-radius': '4px',
     'border': '1px solid lightgrey',
     'color': 'black',
-    'background': 'lightgrey',
+    'background': 'transparent',
     'padding': '6px',
     'margin': '0px',
     'box-shadow': 'unset',
@@ -117,8 +117,6 @@ function Payze(trId) {
   function updateStyles() {
     iframeUrl = "".concat(BASE_URL, "/iframe/").concat(transactionId, "?name_style=").concat(styleObjToString(nameStyle), "&pan_style=").concat(styleObjToString(panStyle), "&date_style=").concat(styleObjToString(dateStyle), "&csv_style=").concat(styleObjToString(csvStyle));
   }
-
-  function initLoader() {}
   /**
    * Set Button style
    *
