@@ -249,9 +249,16 @@ function Payze(trId) {
               location.href = res.redirectUrl;
             } else if (res.threeDSecureMajorVersion === 2) {
               let form = document.createElement('form');
+              let input = document.createElement('input');
               form.setAttribute('style', 'display:none');
               form.setAttribute('action', res.redirectUrl);
               form.setAttribute('method', 'POST');
+              input.setAttribute('type', 'hidden');
+              input.setAttribute('name', 'creq');
+              input.setAttribute('value', res.creq);
+
+              form.append(input);
+
               document.getElementById('card-info').append(form);
               form.submit();
             }
