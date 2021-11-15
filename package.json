@@ -1,6 +1,6 @@
 {
   "name": "@payze/payze-js",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "payze.io ",
   "main": "payze.bundle.js",
   "module": "payze.js",
