@@ -8,7 +8,7 @@ function Payze(trId) {
     throw 'transactionId undefined';
   }
 
-  let BASE_URL = "https://payze.io";
+  let BASE_URL = "https://paygate.payze.io";
   let transactionId = trId;
   let iframeUrl = '';
   let startPaymentUrl = '';
@@ -119,12 +119,12 @@ function Payze(trId) {
    * @param {string} trId  Transaction ID.
    */
   function generateIframeUrls(trId) {
-    iframeUrl = `${BASE_URL}/api/redirect/iframe/${trId}?name_style=${styleObjToString(nameStyle)}&pan_style=${styleObjToString(panStyle)}&date_style=${styleObjToString(dateStyle)}&csv_style=${styleObjToString(csvStyle)}`;
+    iframeUrl = `${BASE_URL}/iframe/${trId}?name_style=${styleObjToString(nameStyle)}&pan_style=${styleObjToString(panStyle)}&date_style=${styleObjToString(dateStyle)}&csv_style=${styleObjToString(csvStyle)}`;
     startPaymentUrl = `${BASE_URL}/iframe-rest/${trId}/start_payment`;
   }
 
   function updateStyles() {
-    iframeUrl = `${BASE_URL}/api/redirect/iframe/${transactionId}?name_style=${styleObjToString(nameStyle)}&pan_style=${styleObjToString(panStyle)}&date_style=${styleObjToString(dateStyle)}&csv_style=${styleObjToString(csvStyle)}`;
+    iframeUrl = `${BASE_URL}/iframe/${transactionId}?name_style=${styleObjToString(nameStyle)}&pan_style=${styleObjToString(panStyle)}&date_style=${styleObjToString(dateStyle)}&csv_style=${styleObjToString(csvStyle)}`;
   }
 
   /**

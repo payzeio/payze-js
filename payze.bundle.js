@@ -22,7 +22,7 @@ function Payze(trId) {
     throw 'transactionId undefined';
   }
 
-  var BASE_URL = "https://payze.io";
+  var BASE_URL = "https://paygate.payze.io";
   var transactionId = trId;
   var iframeUrl = '';
   var startPaymentUrl = '';
@@ -110,12 +110,12 @@ function Payze(trId) {
    */
 
   function generateIframeUrls(trId) {
-    iframeUrl = "".concat(BASE_URL, "/api/redirect/iframe/").concat(trId, "?name_style=").concat(styleObjToString(nameStyle), "&pan_style=").concat(styleObjToString(panStyle), "&date_style=").concat(styleObjToString(dateStyle), "&csv_style=").concat(styleObjToString(csvStyle));
+    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(trId, "?name_style=").concat(styleObjToString(nameStyle), "&pan_style=").concat(styleObjToString(panStyle), "&date_style=").concat(styleObjToString(dateStyle), "&csv_style=").concat(styleObjToString(csvStyle));
     startPaymentUrl = "".concat(BASE_URL, "/iframe-rest/").concat(trId, "/start_payment");
   }
 
   function updateStyles() {
-    iframeUrl = "".concat(BASE_URL, "/api/redirect/iframe/").concat(transactionId, "?name_style=").concat(styleObjToString(nameStyle), "&pan_style=").concat(styleObjToString(panStyle), "&date_style=").concat(styleObjToString(dateStyle), "&csv_style=").concat(styleObjToString(csvStyle));
+    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(transactionId, "?name_style=").concat(styleObjToString(nameStyle), "&pan_style=").concat(styleObjToString(panStyle), "&date_style=").concat(styleObjToString(dateStyle), "&csv_style=").concat(styleObjToString(csvStyle));
   }
   /**
    * Set Button style
