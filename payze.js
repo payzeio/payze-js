@@ -2,115 +2,42 @@
  * Init Payze SDK
  *
  * @param {string} trId  Transaction ID.
+ * @param {string} buttonStyle  Transaction ID.
+ * @param {string} panStyle  Transaction ID.
+ * @param {string} dateStyle  Transaction ID.
+ * @param {string} cvvStyle  Transaction ID.
+ *
  */
-function Payze(trId) {
-  if (!trId) {
-    throw 'transactionId undefined';
+function Payze(trId, buttonStyle, panStyle, nameStyle, dateStyle, cvvStyle) {
+  if (trId.length < 1) {
+    throw 'transactionId is required';
   }
 
-  let BASE_URL = "https://paygate.payze.io";
-  let transactionId = trId;
+  const BASE_URL = "https://paygate.payze.io";
+  const transactionId = trId;
   let iframeUrl = '';
   let startPaymentUrl = '';
 
   let createdElements = false;
   let createdPayButton = false;
 
-  let buttonStyles = {
-    'font-size': '14px',
-    'border': '0px',
-    'border-radius': '4px',
-    'color': 'white',
-    'background': '#5033fe',
-    'padding': '6px',
-    'margin': '0px',
-    'box-shadow': 'unset',
-    'width': '100%25',
-    'height': 'auto',
-    'cursor': 'pointer'
-  };
-
-  let nameStyle = {
-    'font-size': '14px',
-    'border-radius': '4px',
-    'border': '1px solid lightgrey',
-    'color': 'black',
-    'background': 'transparent',
-    'padding': '6px',
-    'margin': '0px',
-    'box-shadow': 'unset',
-    'width': '100%25',
-    'height': '26px',
-    'outline': 'none'
-  };
-  let panStyle = {
-    'font-size': '14px',
-    'border-radius': '4px',
-    'border': '1px solid lightgrey',
-    'color': 'black',
-    'background': 'transparent',
-    'padding': '6px',
-    'margin': '0 0 4px 0',
-    'box-shadow': 'unset',
-    'width': '100%25',
-    'height': '26px',
-    'outline': 'none'
-  };
-  let dateStyle = {
-    'font-size': '14px',
-    'border-radius': '4px',
-    'border': '1px solid lightgrey',
-    'color': 'black',
-    'background': 'transparent',
-    'padding': '6px',
-    'margin': '0px',
-    'box-shadow': 'unset',
-    'width': '100%25',
-    'height': '26px',
-    'outline': 'none'
-  };
-  let csvStyle = {
-    'font-size': '14px',
-    'border-radius': '4px',
-    'border': '1px solid lightgrey',
-    'color': 'black',
-    'background': 'transparent',
-    'padding': '6px',
-    'margin': '0px',
-    'box-shadow': 'unset',
-    'width': '100%25',
-    'height': '26px',
-    'outline': 'none'
-  };
+  let _buttonStyles = buttonStyle;
+  let _nameStyle = nameStyle;
+  let _panStyle = panStyle;
+  let _dateStyle = dateStyle;
+  let _csvStyle = cvvStyle;
 
   generateIframeUrls(trId);
 
   let style = document.createElement('style');
   style.setAttribute('type', 'text/css');
-  style.innerHTML = '.loader {' +
-    '  border: 8px solid #f3f3f3;' +
-    '  border-radius: 50%;' +
-    '  border-top: 8px solid #5033fe;' +
-    '  width: 30px;' +
-    '  height: 30px;' +
-    '  -webkit-animation: spin 2s linear infinite;' +
-    '  animation: spin 2s linear infinite;' +
-    '}' +
-    '@-webkit-keyframes spin {' +
-    '  0% { -webkit-transform: rotate(0deg); }' +
-    '  100% { -webkit-transform: rotate(360deg); }' +
-    '}' +
-    '@keyframes spin {' +
-    '  0% { transform: rotate(0deg); }' +
-    '  100% { transform: rotate(360deg); }' +
-    '}';
   document.getElementsByTagName('head')[0].appendChild(style);
 
   let loader = document.createElement('div');
   loader.setAttribute('id', 'loader')
   loader.setAttribute('style', 'display: none;width: 100%; height: 100%; background-color: #f3f3f350; left:0; top:0; position: absolute;');
 
-  console.info('Payze SDK');
+  console.info('Payze SDK initialized');
 
   /**
    *
@@ -119,42 +46,35 @@ function Payze(trId) {
    * @param {string} trId  Transaction ID.
    */
   function generateIframeUrls(trId) {
-    iframeUrl = `${BASE_URL}/iframe/${trId}?name_style=${styleObjToString(nameStyle)}&pan_style=${styleObjToString(panStyle)}&date_style=${styleObjToString(dateStyle)}&csv_style=${styleObjToString(csvStyle)}`;
+    iframeUrl = `${BASE_URL}/iframe/${trId}?name_style=${styleObjToString(_nameStyle)}&pan_style=${styleObjToString(_panStyle)}&date_style=${styleObjToString(_dateStyle)}&csv_style=${styleObjToString(_csvStyle)}`;
     startPaymentUrl = `${BASE_URL}/iframe-rest/${trId}/start_payment`;
   }
 
   function updateStyles() {
-    iframeUrl = `${BASE_URL}/iframe/${transactionId}?name_style=${styleObjToString(nameStyle)}&pan_style=${styleObjToString(panStyle)}&date_style=${styleObjToString(dateStyle)}&csv_style=${styleObjToString(csvStyle)}`;
+    iframeUrl = `${BASE_URL}/iframe/${transactionId}?name_style=${styleObjToString(_nameStyle)}&pan_style=${styleObjToString(_panStyle)}&date_style=${styleObjToString(_dateStyle)}&csv_style=${styleObjToString(_csvStyle)}`;
   }
 
   /**
    * Set Button style
    *
-   * @param {string=} style.font-size Input font-size - Default Value is 14px
-   * @param {string=} style.color Input color - Default Value is black
-   * @param {string=} style.border Input border - Default Value is 0px
-   * @param {string=} style.background Input background - Default Value is #5033fe
-   * @param {string=} style.padding Input padding - Default Value is 0px
-   * @param {string=} style.margin Input margin - Default Value is 0px
-   * @param {string=} style.box-shadow Input box-shadow - Default Value is unset
-   * @param style
    * @param {string} inputType Input Type - Default Value is 'PAN_DATA'
+   * @param {string} style CSS Style - ex: 'background-color: #ff0000;'
    *
    */
-  function setInputStyles(style, inputType) {
-    let input = panStyle;
+  function setInputStyles(inputType, style) {
+    let input = _panStyle;
     switch (inputType) {
       case 'PAN':
-        input = panStyle;
+        input = _panStyle;
         break;
       case 'NAME':
-        input = nameStyle;
+        input = _nameStyle;
         break;
       case 'DATE':
-        input = dateStyle;
+        input = _dateStyle;
         break;
       case 'CVV':
-        input = csvStyle;
+        input = _csvStyle;
         break;
     }
     for (const property in style) {
@@ -180,7 +100,7 @@ function Payze(trId) {
   function setButtonStyles(style) {
     for (const property in style) {
       if (style.hasOwnProperty(property)) {
-        buttonStyles[property] = style[property];
+        _buttonStyles[property] = style[property];
       }
     }
   }
@@ -231,7 +151,7 @@ function Payze(trId) {
       let button = document.createElement('button');
 
       button.setAttribute('name', 'pay');
-      button.setAttribute('style', styleObjToString(buttonStyles));
+      button.setAttribute('style', styleObjToString(_buttonStyles));
       button.innerHTML = buttonText ? buttonText :  'PAY NOW';
 
       element.append(button);
@@ -287,7 +207,6 @@ function Payze(trId) {
       }).then(res => res.json());
     } catch (e) {
       console.error(e)
-      // document.getElementById('card-form').setAttribute('src', `${BASE_URL}/iframe/${transactionId}#send`);
     }
   }
 

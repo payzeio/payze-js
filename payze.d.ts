@@ -4,7 +4,7 @@
  * @param {string} trId  Transaction ID.
  */
 export function Payze(trId: string): {
-  setInputStyles: (style: any, inputType: string) => void;
+  setInputStyles: (inputType: string, style: any) => void;
   setButtonStyles: (style: any) => void;
   updateStyles: () => void;
   renderCardInfo: () => void;
