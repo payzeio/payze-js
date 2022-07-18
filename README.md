@@ -26,15 +26,14 @@
 </div>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
-Payze is the best software platform for running an internet business. We handle money movement flow for our customers by giving them tools they need.
-
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
+Payze is the best software platform for running an internet business. We handle money movement flow for our customers by
+giving them tools they need.
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Installation
@@ -44,103 +43,62 @@ Payze is the best software platform for running an internet business. We handle 
    npm install @payze/payze-js
    ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 ### Basic Usage
 
 1. Import payze-js SDK
-   ```js
+   ```ts
    import {Payze} from "@payze/payze-js";
    ```
 2. initialize payze
-   ```js
-   const payze = Payze('TransactionId');
+   ```ts
+   const payze = Payze('transactionId', {});
    ```
 3. include following html
    ```html
-    <div id="card">
-      <div id="card-info">
-   
-      </div>
-   
-      <div id="pay">
-   
-      </div>
-    </div>
+   <div id="card">
+     <div id="card-info">
+
+     </div>
+   </div>
    ```
 4. Render Card Elements
-   ```js
+   ```ts
     payze.renderCardInfo();
-    payze.renderPayButton();
    ```
-
 
 ### Customization
 
-1. Customize Card information inputs
-   ```js
-    // setInputStyles method updates styling of one of the available inputs, 
-    // it accepts 2 arguments, 
-    // Argument #1 is object containing css styles
-    // Argument #2 is name of the input to be styled, supported names are: PAN, NAME, DATE, CVV
-    // Example usage: 
-    payze.setInputStyles({'font-size': '14px', 'color': 'lightblue'}, 'PAN');
-   
-    // input styles will not be rendered until updateStyles method is called
-   
-   ```
-   ---
-   > **PAN:**
-   > Primary Account Number input
-   > 
-   > **NAME:**
-   > Cardholder Name input
-   > 
-   > **DATE:**
-   > Expiration Date input
-   > 
-   > **CVV:**
-   > Card Verification Number input
-   ---
-   
-2. Customize Pay Button 
-   ```js
-    // setButtonStyles method updates styling the pay button, 
-    // it accepts 1 argument, an object containing css styles
-    // Example usage: 
-    payze.setButtonStyles({
-      'font-size': '14px',
-      'border': '0px solid grey',
-      'border-radius': '0px',
-      'padding': '10px',
-      'margin': '10px 0px'
-    });
-   
-    // button styles will not be rendered until updateStyles method is called
-   ```   
-   
-3. Render Customized Element Styles
-   ```js
-    // updateStyles method renders the updated styles from one of the above mentioned methods
-    payze.updateStyles();
-   
-    // NOTE: payze.renderCardInfo and payze.renderPayButton should be called after payze.updateStyles method call
-   ```
+```js
+// Payze SDK accepts 2 arguments: transactionId and styles object
+// styles object is optional and can be used to customize card inputs
+// Example usage: 
+const payze = Payze('transactionId', {
+  pan: 'font-size: 20px;',
+  name: 'background-color: red;',
+  date: 'font-size: 20px;background-color: #f00;',
+  cvv: 'font-size: 20px;color: #f00;border-radius: 10px;',
+  iframeHeight: '400' // height of iframe in pixels (default: 200)
+});
+ ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
+| Parameters | Description                    |
+|:-----------|:-------------------------------|
+| pan        | Card Number input              |
+| name       | Cardholder Name input          |
+| date       | Expiration Date input          |
+| cvv        | Card Verification Number input |
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+
 [stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+
 [license-url]: https://github.com/LICENSE.txt
