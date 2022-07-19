@@ -65,6 +65,10 @@ giving them tools they need.
    ```ts
     payze.renderCardInfo();
    ```
+5. Pay functionality
+   ```ts
+    payze.pay();
+    ```
 
 ### Customization
 
