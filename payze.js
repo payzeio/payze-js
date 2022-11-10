@@ -10,6 +10,8 @@
  * @param {string=} style.iframeHeight  IframeHeight size.
  *
  */
+const {BehaviorSubject} = require("rxjs");
+
 function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '200'}) {
   if (!trId) {
     throw 'transactionId is required';
@@ -19,6 +21,7 @@ function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '
   var iframeUrl = '';
   var startPaymentUrl = '';
   var createdElements = false;
+  var valid = new BehaviorSubject(false);
 
   var _nameStyle = encodeURIComponent(name);
   var _panStyle = encodeURIComponent(pan);
@@ -54,11 +57,21 @@ function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('height', iframeHeight + 'px');
       iframe.setAttribute('width', '100%');
+
+      // iframe
       element.append(iframe);
       createdElements = true;
     } catch (e) {
       console.error(e);
     }
+  }
+
+  window.addEventListener('message', event => {
+    valid.next(event.data === 'valid');
+  });
+
+  function validateCardInfo() {
+    return valid;
   }
 
   function pay() {
@@ -70,7 +83,8 @@ function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '
 
   return {
     renderCardInfo,
-    pay
+    pay,
+    validateCardInfo
   };
 }
 

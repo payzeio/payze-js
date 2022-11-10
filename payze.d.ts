@@ -10,8 +10,10 @@
  * @param {string=} style.iframeHeight  IframeHeight size.
  *
  */
+import {Observable} from "rxjs";
 
 export function Payze(trId: string, style?: any): {
   renderCardInfo: () => void;
   pay: () => void;
+  validateCardInfo: () => Observable<boolean>;
 };

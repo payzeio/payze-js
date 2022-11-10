@@ -64,8 +64,18 @@ giving them tools they need.
 4. Render Card Elements
    ```ts
     payze.renderCardInfo();
+   
+    this.payze.validateCardInfo().subscribe((valid) => {
+      this.valid = valid;
+    });
    ```
-5. Pay functionality
+5. Validate Card Elements
+   ```ts
+    this.payze.validateCardInfo().subscribe((valid) => {
+      this.valid = valid; // true or false
+    });
+   ```
+6. Pay functionality
    ```ts
     payze.pay();
     ```
@@ -91,6 +101,13 @@ const payze = Payze('transactionId', {
 | name       | Cardholder Name input          |
 | date       | Expiration Date input          |
 | cvv        | Card Verification Number input |
+
+
+| Dependencies      | Version |
+|:------------------|:--------|
+| Rxjs              | ^7.5.7  |
+
+
 
 <!-- LICENSE -->
 

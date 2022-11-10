@@ -12,16 +12,20 @@
  * @param {string=} style.iframeHeight  IframeHeight size.
  *
  */
-function Payze(trId) {
-  var _name, _pan, _date, _cvv;
+var _require = require("rxjs"),
+    BehaviorSubject = _require.BehaviorSubject;
 
-  var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
-    pan: pan,
-    name: name,
-    date: date,
-    cvv: cvv,
-    iframeHeight: iframeHeight
-  };
+function Payze(trId, _ref) {
+  var _ref$pan = _ref.pan,
+      pan = _ref$pan === void 0 ? '' : _ref$pan,
+      _ref$name = _ref.name,
+      name = _ref$name === void 0 ? '' : _ref$name,
+      _ref$date = _ref.date,
+      date = _ref$date === void 0 ? '' : _ref$date,
+      _ref$cvv = _ref.cvv,
+      cvv = _ref$cvv === void 0 ? '' : _ref$cvv,
+      _ref$iframeHeight = _ref.iframeHeight,
+      iframeHeight = _ref$iframeHeight === void 0 ? '200' : _ref$iframeHeight;
 
   if (!trId) {
     throw 'transactionId is required';
@@ -31,14 +35,15 @@ function Payze(trId) {
   var iframeUrl = '';
   var startPaymentUrl = '';
   var createdElements = false;
+  var valid = new BehaviorSubject(false);
 
-  var _nameStyle = encodeURIComponent((_name = name) !== null && _name !== void 0 ? _name : '');
+  var _nameStyle = encodeURIComponent(name);
 
-  var _panStyle = encodeURIComponent((_pan = pan) !== null && _pan !== void 0 ? _pan : '');
+  var _panStyle = encodeURIComponent(pan);
 
-  var _dateStyle = encodeURIComponent((_date = date) !== null && _date !== void 0 ? _date : '');
+  var _dateStyle = encodeURIComponent(date);
 
-  var _cvvStyle = encodeURIComponent((_cvv = cvv) !== null && _cvv !== void 0 ? _cvv : '');
+  var _cvvStyle = encodeURIComponent(cvv);
 
   generateIframeUrls(trId);
   console.info('Payze SDK initialized');
@@ -56,8 +61,6 @@ function Payze(trId) {
 
   function renderCardInfo() {
     try {
-      var _iframeHeight;
-
       if (createdElements) {
         return;
       }
@@ -69,13 +72,22 @@ function Payze(trId) {
       iframe.setAttribute('id', 'card-form-iframe');
       iframe.setAttribute('scrolling', 'no');
       iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('height', ((_iframeHeight = iframeHeight) !== null && _iframeHeight !== void 0 ? _iframeHeight : '200') + 'px');
-      iframe.setAttribute('width', '100%');
+      iframe.setAttribute('height', iframeHeight + 'px');
+      iframe.setAttribute('width', '100%'); // iframe
+
       element.append(iframe);
       createdElements = true;
     } catch (e) {
       console.error(e);
     }
+  }
+
+  window.addEventListener('message', function (event) {
+    valid.next(event.data === 'valid');
+  });
+
+  function validateCardInfo() {
+    return valid;
   }
 
   function pay() {
@@ -87,7 +99,8 @@ function Payze(trId) {
 
   return {
     renderCardInfo: renderCardInfo,
-    pay: pay
+    pay: pay,
+    validateCardInfo: validateCardInfo
   };
 }
 
