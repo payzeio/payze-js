@@ -1,15 +1,14 @@
 <div id="top"></div>
 
 [comment]: <> ([![Stargazers][stars-shield]][stars-url])
-[![MIT License][license-shield]][license-url]
 
 
 
 <!-- PROJECT LOGO -->
 <br />
-<div align="center">
+<div style="text-align: center">
   <a href="https://payze.io" target="_blank">
-    <img src="https://payze.io/assets/images/logo_v2.svg" alt="Logo" height="40">
+    <img src="https://dashboard.payze.io/assets/images/logo_v2.svg" alt="Logo" height="40">
   </a>
 
 <h3 align="center">Payze JS SDK</h3>
@@ -64,10 +63,6 @@ giving them tools they need.
 4. Render Card Elements
    ```ts
     payze.renderCardInfo();
-   
-    this.payze.validateCardInfo().subscribe((valid) => {
-      this.valid = valid;
-    });
    ```
 5. Validate Card Elements
    ```ts
