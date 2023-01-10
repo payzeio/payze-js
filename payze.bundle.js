@@ -11,6 +11,13 @@
  * @param {string=} style.cvv  CVV Style.
  * @param {string=} style.iframeHeight  IframeHeight size.
  * @param {string=} style.cardholderError  Cardholder error message.
+ * @param {string=} style.panError  Pan error message.
+ * @param {string=} style.expirationDateError  Date error message.
+ * @param {string=} style.cvvError  CVV error message.
+ * @param {string=} style.cardHolderPlaceholder  CardHolder placeholder.
+ * @param {string=} style.expirationDatePlaceholder  ExpirationDate placeholder.
+ * @param {string=} style.cvvPlaceholder  CVV placeholder.
+ *
  *
  */
 var _require = require("rxjs"),
@@ -38,7 +45,9 @@ function Payze(trId, _ref) {
       _ref$cardHolderPlaceh = _ref.cardHolderPlaceholder,
       cardHolderPlaceholder = _ref$cardHolderPlaceh === void 0 ? 'Cardholder Name' : _ref$cardHolderPlaceh,
       _ref$expirationDatePl = _ref.expirationDatePlaceholder,
-      expirationDatePlaceholder = _ref$expirationDatePl === void 0 ? 'MM/YY' : _ref$expirationDatePl;
+      expirationDatePlaceholder = _ref$expirationDatePl === void 0 ? 'MM/YY' : _ref$expirationDatePl,
+      _ref$cvvPlaceholder = _ref.cvvPlaceholder,
+      cvvPlaceholder = _ref$cvvPlaceholder === void 0 ? 'CVV/CVC' : _ref$cvvPlaceholder;
 
   if (!trId) {
     throw 'transactionId is required';
@@ -68,7 +77,7 @@ function Payze(trId, _ref) {
    */
 
   function generateIframeUrls(trId) {
-    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(trId, "?cardholder_style=").concat(_nameStyle, "&pan_style=").concat(_panStyle, "&expirationDate_style=").concat(_dateStyle, "&cvv_style=").concat(_cvvStyle, "&pan_error=").concat(panError, "&cardholder_error=").concat(cardholderError, "&expirationDate_error=").concat(expirationDateError, "&cvv_error=").concat(cvvError, "&cardholder_placeholder=").concat(cardHolderPlaceholder, "&expirationDate_placeholder=").concat(expirationDatePlaceholder);
+    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(trId, "?cardholder_style=").concat(_nameStyle, "&pan_style=").concat(_panStyle, "&expirationDate_style=").concat(_dateStyle, "&cvv_style=").concat(_cvvStyle, "&pan_error=").concat(panError, "&cardholder_error=").concat(cardholderError, "&expirationDate_error=").concat(expirationDateError, "&cvv_error=").concat(cvvError, "&cardholder_placeholder=").concat(cardHolderPlaceholder, "&expirationDate_placeholder=").concat(expirationDatePlaceholder, "&cvv_placeholder=").concat(cvvPlaceholder);
     startPaymentUrl = "".concat(BASE_URL, "/page/twoFactorClient?transactionId=").concat(trId);
   }
 
