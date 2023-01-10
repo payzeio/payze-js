@@ -86,16 +86,28 @@ const payze = Payze('transactionId', {
   name: 'background-color: red;',
   date: 'font-size: 20px;background-color: #f00;',
   cvv: 'font-size: 20px;color: #f00;border-radius: 10px;',
-  iframeHeight: '400' // height of iframe in pixels (default: 200)
+  iframeHeight: '400', // height of iframe in pixels (default: 200)
+  panError: 'Card number is invalid!', // error message for pan input
+  expirationDateError: 'Date is invalid!', // error message for expiration date input
+  cardHolderError: 'Cardholder name is required!', // error message for cardholder name input
+  cvvError: 'CVV/CVC is required!', // error message for cvv/cvc input
+  cardHolderPlaceholder: 'Cardholder Name', // placeholder for cardholder name input
+  expirationDatePlaceholder: 'MM/YY', // placeholder for expiration date input
 });
  ```
 
-| Parameters | Description                    |
-|:-----------|:-------------------------------|
-| pan        | Card Number input              |
-| name       | Cardholder Name input          |
-| date       | Expiration Date input          |
-| cvv        | Card Verification Number input |
+| Parameters                    | Description                               |
+|:------------------------------|:------------------------------------------|
+| pan                           | Card Number input                         |
+| name                          | Cardholder Name input                     |
+| date                          | Expiration Date input                     |
+| iframeHeight                  | Iframe Height (Default: 200px)            |
+| panError                      | Error message for pan (Card number) input |
+| expirationDateError           | Error message for expiration date input   |
+| cardHolderError               | Error message for Cardholder name         |
+| cvvError                      | Error message for CVV/CVC input           |
+| cardHolderPlaceholder         | Placeholder for cardholder name           |
+| expirationDatePlaceholder     | Placeholder for expiration date input     |
 
 
 | Dependencies      | Version |

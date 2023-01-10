@@ -10,6 +10,7 @@
  * @param {string=} style.date  Date Style.
  * @param {string=} style.cvv  CVV Style.
  * @param {string=} style.iframeHeight  IframeHeight size.
+ * @param {string=} style.cardholderError  Cardholder error message.
  *
  */
 var _require = require("rxjs"),
@@ -25,7 +26,19 @@ function Payze(trId, _ref) {
       _ref$cvv = _ref.cvv,
       cvv = _ref$cvv === void 0 ? '' : _ref$cvv,
       _ref$iframeHeight = _ref.iframeHeight,
-      iframeHeight = _ref$iframeHeight === void 0 ? '200' : _ref$iframeHeight;
+      iframeHeight = _ref$iframeHeight === void 0 ? '200' : _ref$iframeHeight,
+      _ref$cardholderError = _ref.cardholderError,
+      cardholderError = _ref$cardholderError === void 0 ? 'Cardholder name is required!' : _ref$cardholderError,
+      _ref$expirationDateEr = _ref.expirationDateError,
+      expirationDateError = _ref$expirationDateEr === void 0 ? 'Date is invalid!' : _ref$expirationDateEr,
+      _ref$cvvError = _ref.cvvError,
+      cvvError = _ref$cvvError === void 0 ? 'CVV/CVC is required!' : _ref$cvvError,
+      _ref$panError = _ref.panError,
+      panError = _ref$panError === void 0 ? 'Card number is invalid!' : _ref$panError,
+      _ref$cardHolderPlaceh = _ref.cardHolderPlaceholder,
+      cardHolderPlaceholder = _ref$cardHolderPlaceh === void 0 ? 'Cardholder Name' : _ref$cardHolderPlaceh,
+      _ref$expirationDatePl = _ref.expirationDatePlaceholder,
+      expirationDatePlaceholder = _ref$expirationDatePl === void 0 ? 'MM/YY' : _ref$expirationDatePl;
 
   if (!trId) {
     throw 'transactionId is required';
@@ -55,7 +68,7 @@ function Payze(trId, _ref) {
    */
 
   function generateIframeUrls(trId) {
-    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(trId, "?cardholder_style=").concat(_nameStyle, "&pan_style=").concat(_panStyle, "&expirationDate_style=").concat(_dateStyle, "&cvv_style=").concat(_cvvStyle);
+    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(trId, "?cardholder_style=").concat(_nameStyle, "&pan_style=").concat(_panStyle, "&expirationDate_style=").concat(_dateStyle, "&cvv_style=").concat(_cvvStyle, "&pan_error=").concat(panError, "&cardholder_error=").concat(cardholderError, "&expirationDate_error=").concat(expirationDateError, "&cvv_error=").concat(cvvError, "&cardholder_placeholder=").concat(cardHolderPlaceholder, "&expirationDate_placeholder=").concat(expirationDatePlaceholder);
     startPaymentUrl = "".concat(BASE_URL, "/page/twoFactorClient?transactionId=").concat(trId);
   }
 
@@ -83,7 +96,11 @@ function Payze(trId, _ref) {
   }
 
   window.addEventListener('message', function (event) {
-    valid.next(event.data === 'valid');
+    if (event.data === 'valid') {
+      valid.next(true);
+    } else if (event.data === 'invalid') {
+      valid.next(false);
+    }
   });
 
   function validateCardInfo() {

@@ -8,11 +8,19 @@
  * @param {string=} style.date  Date Style.
  * @param {string=} style.cvv  CVV Style.
  * @param {string=} style.iframeHeight  IframeHeight size.
+ * @param {string=} style.cardholderError  Cardholder error message.
+ * @param {string=} style.panError  Pan error message.
+ * @param {string=} style.expirationDateError  Date error message.
+ * @param {string=} style.cvvError  CVV error message.
+ * @param {string=} style.cardHolderPlaceholder  CardHolder placeholder.
+ * @param {string=} style.expirationDatePlaceholder  ExpirationDate placeholder.
+ * @param {string=} style.cvvPlaceholder  CVV placeholder.
+ *
  *
  */
 const {BehaviorSubject} = require("rxjs");
 
-function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '200'}) {
+function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '200', cardholderError = 'Cardholder name is required!', expirationDateError = 'Date is invalid!', cvvError = 'CVV/CVC is required!', panError = 'Card number is invalid!', cardHolderPlaceholder = 'Cardholder Name', expirationDatePlaceholder = 'MM/YY', cvvPlaceholder = 'CVV/CVC'}) {
   if (!trId) {
     throw 'transactionId is required';
   }
@@ -38,7 +46,7 @@ function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '
    * @param {string} trId  Transaction ID.
    */
   function generateIframeUrls(trId) {
-    iframeUrl = `${BASE_URL}/iframe/${trId}?cardholder_style=${_nameStyle}&pan_style=${_panStyle}&expirationDate_style=${_dateStyle}&cvv_style=${_cvvStyle}`;
+    iframeUrl = `${BASE_URL}/iframe/${trId}?cardholder_style=${_nameStyle}&pan_style=${_panStyle}&expirationDate_style=${_dateStyle}&cvv_style=${_cvvStyle}&pan_error=${panError}&cardholder_error=${cardholderError}&expirationDate_error=${expirationDateError}&cvv_error=${cvvError}&cardholder_placeholder=${cardHolderPlaceholder}&expirationDate_placeholder=${expirationDatePlaceholder}&cvv_placeholder=${cvvPlaceholder}`;
     startPaymentUrl = `${BASE_URL}/page/twoFactorClient?transactionId=${trId}`;
   }
 
@@ -67,7 +75,11 @@ function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '
   }
 
   window.addEventListener('message', event => {
-    valid.next(event.data === 'valid');
+    if (event.data === 'valid') {
+      valid.next(true);
+    } else if (event.data === 'invalid') {
+      valid.next(false);
+    }
   });
 
   function validateCardInfo() {
