@@ -34,8 +34,8 @@ function Payze(trId, _ref) {
       cvv = _ref$cvv === void 0 ? '' : _ref$cvv,
       _ref$iframeHeight = _ref.iframeHeight,
       iframeHeight = _ref$iframeHeight === void 0 ? '200' : _ref$iframeHeight,
-      _ref$cardholderError = _ref.cardholderError,
-      cardholderError = _ref$cardholderError === void 0 ? 'Cardholder name is required!' : _ref$cardholderError,
+      _ref$cardHolderError = _ref.cardHolderError,
+      cardHolderError = _ref$cardHolderError === void 0 ? 'Cardholder name is required!' : _ref$cardHolderError,
       _ref$expirationDateEr = _ref.expirationDateError,
       expirationDateError = _ref$expirationDateEr === void 0 ? 'Date is invalid!' : _ref$expirationDateEr,
       _ref$cvvError = _ref.cvvError,
@@ -77,7 +77,7 @@ function Payze(trId, _ref) {
    */
 
   function generateIframeUrls(trId) {
-    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(trId, "?cardholder_style=").concat(_nameStyle, "&pan_style=").concat(_panStyle, "&expirationDate_style=").concat(_dateStyle, "&cvv_style=").concat(_cvvStyle, "&pan_error=").concat(panError, "&cardholder_error=").concat(cardholderError, "&expirationDate_error=").concat(expirationDateError, "&cvv_error=").concat(cvvError, "&cardholder_placeholder=").concat(cardHolderPlaceholder, "&expirationDate_placeholder=").concat(expirationDatePlaceholder, "&cvv_placeholder=").concat(cvvPlaceholder);
+    iframeUrl = "".concat(BASE_URL, "/iframe/").concat(trId, "?cardholder_style=").concat(_nameStyle, "&pan_style=").concat(_panStyle, "&expirationDate_style=").concat(_dateStyle, "&cvv_style=").concat(_cvvStyle, "&pan_error=").concat(panError, "&cardholder_error=").concat(cardHolderError, "&expirationDate_error=").concat(expirationDateError, "&cvv_error=").concat(cvvError, "&cardholder_placeholder=").concat(cardHolderPlaceholder, "&expirationDate_placeholder=").concat(expirationDatePlaceholder, "&cvv_placeholder=").concat(cvvPlaceholder);
     startPaymentUrl = "".concat(BASE_URL, "/page/twoFactorClient?transactionId=").concat(trId);
   }
 
