@@ -8,7 +8,7 @@
 <br />
 <div style="text-align: center">
   <a href="https://payze.io" target="_blank">
-    <img src="https://dashboard.payze.io/assets/images/logo_v2.svg" alt="Logo" height="40">
+    <img src="https://payze.io/assets/payze.svg" alt="Logo" height="40">
   </a>
 
 <h3 align="center">Payze JS SDK</h3>
