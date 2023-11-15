@@ -110,6 +110,8 @@ const payze = Payze('transactionId', {
 | cvvError                      | Error message for CVV/CVC input           |
 | cardHolderPlaceholder         | Placeholder for cardholder name           |
 | expirationDatePlaceholder     | Placeholder for expiration date input     |
+| successCallback               | Success Callback function                 |
+| errorCallback                 | Fail Callback function                    |
 
 
 | Dependencies      | Version |
