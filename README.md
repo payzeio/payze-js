@@ -93,6 +93,8 @@ const payze = Payze('transactionId', {
   cvvError: 'CVV/CVC is required!', // error message for cvv/cvc input
   cardHolderPlaceholder: 'Cardholder Name', // placeholder for cardholder name input
   expirationDatePlaceholder: 'MM/YY', // placeholder for expiration date input
+  successCallback: successCallbackFunction, // success callback
+  errorCallback: errorCallbackFunction, // error callback
 });
  ```
 

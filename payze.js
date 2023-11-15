@@ -18,16 +18,15 @@
  *
  *
  */
-const {BehaviorSubject} = require("rxjs");
+const { BehaviorSubject } = require("rxjs");
 
-function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '200', cardHolderError = 'Cardholder name is required!', expirationDateError = 'Date is invalid!', cvvError = 'CVV/CVC is required!', panError = 'Card number is invalid!', cardHolderPlaceholder = 'Cardholder Name', expirationDatePlaceholder = 'MM/YY', cvvPlaceholder = 'CVV/CVC'}) {
+function Payze(trId, { pan = '', name = '', date = '', cvv = '', iframeHeight = '200', cardHolderError = 'Cardholder name is required!', expirationDateError = 'Date is invalid!', cvvError = 'CVV/CVC is required!', panError = 'Card number is invalid!', cardHolderPlaceholder = 'Cardholder Name', expirationDatePlaceholder = 'MM/YY', cvvPlaceholder = 'CVV/CVC', successCallback = null, errorCallback = null }) {
   if (!trId) {
     throw 'transactionId is required';
   }
 
   var BASE_URL = "https://paygate.payze.io";
   var iframeUrl = '';
-  var startPaymentUrl = '';
   var createdElements = false;
   var valid = new BehaviorSubject(false);
 
@@ -47,7 +46,7 @@ function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '
    */
   function generateIframeUrls(trId) {
     iframeUrl = `${BASE_URL}/iframe/${trId}?cardholder_style=${_nameStyle}&pan_style=${_panStyle}&expirationDate_style=${_dateStyle}&cvv_style=${_cvvStyle}&pan_error=${panError}&cardholder_error=${cardHolderError}&expirationDate_error=${expirationDateError}&cvv_error=${cvvError}&cardholder_placeholder=${cardHolderPlaceholder}&expirationDate_placeholder=${expirationDatePlaceholder}&cvv_placeholder=${cvvPlaceholder}`;
-    startPaymentUrl = `${BASE_URL}/page/twoFactorClient?transactionId=${trId}`;
+    window.addEventListener('message', handleMessage, false);
   }
 
   function renderCardInfo() {
@@ -88,9 +87,26 @@ function Payze(trId, {pan = '', name = '', date = '', cvv = '', iframeHeight = '
 
   function pay() {
     document.getElementById('card-form-iframe').setAttribute('src', `${iframeUrl}#send`);
-    setTimeout(() => {
-      window.location.href = startPaymentUrl;
-    }, 500);
+  }
+
+  function handleMessage(event) {
+    const { action, status } = event.data;
+  
+    const isValidAction = action === 'PaymentStatus';
+    const hasSuccessCallback = successCallback && typeof successCallback === 'function';
+    const hasErrorCallback = errorCallback && typeof errorCallback === 'function';
+  
+    if (isValidAction) {
+      if (status === 'Success' && hasSuccessCallback) {
+        successCallback();
+      } else if (status === 'Fail' && hasErrorCallback) {
+        errorCallback();
+      } else {
+        console.error('missing callback:', status);
+      }
+    } else {
+      console.error('Invalid action:', action);
+    }
   }
 
   return {
