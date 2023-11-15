@@ -6,7 +6,7 @@
 
 <!-- PROJECT LOGO -->
 <br />
-<div style="text-align: center">
+<div align="center">
   <a href="https://payze.io" target="_blank">
     <img src="https://payze.io/assets/payze.svg" alt="Logo" height="40">
   </a>
